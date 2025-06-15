@@ -1,0 +1,45 @@
+<!-- review.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learned Words</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📖 Learned Words</h1>
+    <ul id="wordList"></ul>
+    <a href="index.html">⬅ Back to Drill</a>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("http://localhost:3000/api/learned")
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById("wordList");
+          if (data.length === 0) {
+            list.innerHTML = "<li>No learned words yet.</li>";
+          } else {
+            data.forEach(entry => {
+              const li = document.createElement("li");
+              li.innerHTML = `
+                <strong>${entry.word}</strong><br>
+                Definition: ${entry.definition}<br>
+                Mnemonic: ${entry.mnemonic}<br>
+                Example: ${entry.example}<br>
+                <hr>
+              `;
+              list.appendChild(li);
+            });
+          }
+        })
+        .catch(err => {
+          console.error("Error loading learned words:", err);
+          document.getElementById("wordList").innerHTML = "<li>Error loading data.</li>";
+        });
+    });
+  </script>
+</body>
+</html>
