@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentWordData = {};
 
-  fetch("http://localhost:3000/api/word")
+  fetch("https://gre-prep-app.onrender.com/api/word")
+
     .then(res => res.json())
     .then(data => {
       currentWordData = data;
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("learned").addEventListener("click", () => {
     if (!currentWordData.word) return;
 
-    fetch("http://localhost:3000/api/learned", {
+    fetch("https://gre-prep-app.onrender.com/api/learned", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(currentWordData)
